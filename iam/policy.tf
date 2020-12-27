@@ -2,7 +2,7 @@ data "aws_iam_policy_document" "this" {
   # VPC Cull Access
   statement {
     effect = "Allow"
-    action = [
+    actions = [
       "ec2:AcceptVpcPeeringConnection",
       "ec2:AcceptVpcEndpointConnections",
       "ec2:AllocateAddress",
