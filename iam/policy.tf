@@ -177,7 +177,7 @@ data "aws_iam_policy_document" "this" {
   # EFS Full Access
   statement {
     effect    = "Allow"
-    actions   = ["efs:*"]
+    actions   = ["elasticfilesystem:*"]
     resources = ["*"]
   }
 }
