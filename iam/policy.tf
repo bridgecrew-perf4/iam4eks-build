@@ -148,6 +148,25 @@ data "aws_iam_policy_document" "this" {
     resources = ["*"]
   }
 
+  # VPC Full Access
+  statement {
+    effect = "Allow"
+    actions = [
+      "iam:*",
+      "organizations:DescribeAccount",
+      "organizations:DescribeOrganization",
+      "organizations:DescribeOrganizationalUnit",
+      "organizations:DescribePolicy",
+      "organizations:ListChildren",
+      "organizations:ListParents",
+      "organizations:ListPoliciesForTarget",
+      "organizations:ListRoots",
+      "organizations:ListPolicies",
+      "organizations:ListTargetsForPolicy"
+    ]
+    resources = ["*"]
+  }
+
   # EKS Full Access
   statement {
     effect    = "Allow"
