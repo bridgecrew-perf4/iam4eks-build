@@ -173,6 +173,13 @@ data "aws_iam_policy_document" "this" {
     actions   = ["eks:*"]
     resources = ["*"]
   }
+
+  # EFS Full Access
+  statement {
+    effect    = "Allow"
+    actions   = ["efs:*"]
+    resources = ["*"]
+  }
 }
 
 
