@@ -180,8 +180,62 @@ data "aws_iam_policy_document" "this" {
     actions   = ["elasticfilesystem:*"]
     resources = ["*"]
   }
-}
 
+  # Route53 Full Access
+  statement {
+    effect = "Allow"
+    actions = [
+      "route53:*",
+      "route53domains:*",
+      "cloudfront:ListDistributions",
+      "elasticloadbalancing:DescribeLoadBalancers",
+      "elasticbeanstalk:DescribeEnvironments",
+      "s3:ListBucket",
+      "s3:GetBucketLocation",
+      "s3:GetBucketWebsite",
+      "ec2:DescribeVpcs",
+      "ec2:DescribeVpcEndpoints",
+      "ec2:DescribeRegions",
+      "sns:ListTopics",
+      "sns:ListSubscriptionsByTopic",
+      "cloudwatch:DescribeAlarms",
+      "cloudwatch:GetMetricStatistics"
+    ]
+    resources = ["*"]
+  }
+  statement {
+    effect    = "Allow"
+    actions   = ["apigateway:GET"]
+    resources = ["arn:aws:apigateway:*::/domainnames"]
+  }
+
+  # ACM Full Access
+  statement {
+    effect    = "Allow"
+    actions   = ["acm:*"]
+    resources = ["arn:aws:apigateway:*::/domainnames"]
+  }
+  statement {
+    effect    = "Allow"
+    actions   = ["iam:CreateServiceLinkedRole"]
+    resources = ["arn:aws:iam::*:role/aws-service-role/acm.amazonaws.com/AWSServiceRoleForCertificateManager*"]
+
+    condition {
+      test     = "StringEquals"
+      variable = "iam:AWSServiceName"
+      values   = ["acm.amazonaws.com"]
+    }
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "iam:DeleteServiceLinkedRole",
+      "iam:GetServiceLinkedRoleDeletionStatus",
+      "iam:GetRole"
+    ]
+    resources = ["arn:aws:iam::*:role/aws-service-role/acm.amazonaws.com/AWSServiceRoleForCertificateManager*"]
+  }
+}
 
 resource "aws_iam_policy" "this" {
   name   = "EKSBuildPolicy"
