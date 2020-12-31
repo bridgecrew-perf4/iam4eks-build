@@ -1,4 +1,4 @@
-data "aws_iam_policy_document" "this" {
+data "aws_iam_policy_document" "this_1" {
   # VPC Cull Access
   statement {
     effect = "Allow"
@@ -235,7 +235,9 @@ data "aws_iam_policy_document" "this" {
     ]
     resources = ["arn:aws:iam::*:role/aws-service-role/acm.amazonaws.com/AWSServiceRoleForCertificateManager*"]
   }
+}
 
+data "aws_iam_policy_document" "this_2" {
   # ELB Full Access
   statement {
     effect    = "Allow"
@@ -275,8 +277,14 @@ data "aws_iam_policy_document" "this" {
   }
 }
 
-resource "aws_iam_policy" "this" {
-  name   = "EKSBuildPolicy"
+resource "aws_iam_policy" "this_1" {
+  name   = "EKSBuildPolicy1"
   path   = "/"
-  policy = data.aws_iam_policy_document.this.json
+  policy = data.aws_iam_policy_document.this_1.json
+}
+
+resource "aws_iam_policy" "this_2" {
+  name   = "EKSBuildPolicy2"
+  path   = "/"
+  policy = data.aws_iam_policy_document.this_2.json
 }
