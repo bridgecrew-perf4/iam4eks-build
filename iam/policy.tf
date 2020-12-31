@@ -213,7 +213,7 @@ data "aws_iam_policy_document" "this" {
   statement {
     effect    = "Allow"
     actions   = ["acm:*"]
-    resources = ["arn:aws:apigateway:*::/domainnames"]
+    resources = ["*"]
   }
   statement {
     effect    = "Allow"
