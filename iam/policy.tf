@@ -235,6 +235,44 @@ data "aws_iam_policy_document" "this" {
     ]
     resources = ["arn:aws:iam::*:role/aws-service-role/acm.amazonaws.com/AWSServiceRoleForCertificateManager*"]
   }
+
+  # ELB Full Access
+  statement {
+    effect    = "Allow"
+    actions   = ["elasticloadbalancing:*"]
+    resources = ["*"]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:DescribeAccountAttributes",
+      "ec2:DescribeAddresses",
+      "ec2:DescribeInternetGateways",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeVpcs",
+      "ec2:DescribeVpcClassicLink",
+      "ec2:DescribeInstances",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DescribeClassicLinkInstances",
+      "ec2:DescribeRouteTables",
+      "ec2:DescribeCoipPools",
+      "ec2:GetCoipPoolUsage",
+      "cognito-idp:DescribeUserPoolClient"
+    ]
+    resources = ["*"]
+  }
+  statement {
+    effect    = "Allow"
+    actions   = ["iam:CreateServiceLinkedRole"]
+    resources = ["*"]
+
+    condition {
+      test     = "StringEquals"
+      variable = "iam:AWSServiceName"
+      values   = ["elasticloadbalancing.amazonaws.com"]
+    }
+  }
 }
 
 resource "aws_iam_policy" "this" {
